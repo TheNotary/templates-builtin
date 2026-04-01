@@ -1,0 +1,130 @@
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+    classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.16.1"
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.1.RELEASE"
+    classpath "io.freefair.gradle:lombok-plugin:5.1.1"
+  }
+}
+
+// Pull in version information from version.properties
+Properties props = new Properties()
+props.load(new FileInputStream("$project.rootDir/gradle/version.properties"))
+props.each { prop -> if ( !project.hasProperty(prop.key) ) project.ext.set(prop.key, prop.value) }
+
+// The pipeline can override these values by e.g. `gradle build -Prevision_version=3`
+version = new Version(major: project.property('major_version'),
+                      minor: project.property('minor_version'),
+                      revision: project.property('revision_version'))
+
+// The release pipeline can override this, e.g. `gradle build snapshot_suffix=`
+def actual_suffix = snapshot_suffix ? "-${snapshot_suffix}" : ""
+version = "${version}${actual_suffix}"
+group = "${project.artifact_groupId}"
+
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "io.freefair.lombok"
+
+
+mainClassName="${artifact_groupId}.App"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url "${artifactory_contextUrl}/repo"
+        credentials {
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+        }
+    }
+}
+
+dependencies {
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.0.5.RELEASE'
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.13', ext: 'pom'
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
+
+    testCompile 'org.mockito:mockito-core:2.15.0'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+}
+project.configurations.implementation.setCanBeResolved(true)
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            version project.version
+            groupId project.group
+            from components.java
+        }
+    }
+}
+
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+
+    resolve {
+        repository {
+            repoKey = 'repo'
+            maven = true
+        }
+    }
+
+    publish {
+        repository {
+            repoKey = snapshot_suffix.toUpperCase() == "SNAPSHOT" ? snapshot_repokey:  release_repokey
+            username = "${artifactory_user}"   // The publisher user name
+            password = "${artifactory_password}" // The publisher password
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+        }
+    }
+}
+
+jar {
+    enabled = true
+    manifest {
+        attributes 'Main-Class': mainClassName,
+                   'Implementation-Version': version
+    }
+    from {
+        configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    dependsOn 'cleanTest'
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+}
+
+class Version {
+    String major, minor, revision
+
+    String toString() {
+        "$major.$minor.$revision"
+    }
+}

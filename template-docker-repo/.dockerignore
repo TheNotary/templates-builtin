@@ -1,0 +1,4 @@
+# Patterns matched to this file will now be eligable for COPY or ADD from the Dockerfile
+
+*.obj
+*.swp

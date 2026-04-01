@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Open index.html with Chrome (file://)",
+      "type": "chrome",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html",
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": [
+        "--allow-file-access-from-files"
+      ],
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/src/*",
+        "vite:///src/*": "${webRoot}/src/*",
+        "/src/*": "${webRoot}/src/*"
+      }
+    }
+  ]
+}
