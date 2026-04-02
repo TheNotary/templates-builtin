@@ -1,3 +1,4 @@
 category: frontend
 purpose: frontend
 language: javascript
+bootstrap_command: npm i
