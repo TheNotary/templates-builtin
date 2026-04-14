@@ -1,0 +1,12 @@
+# azd environment metadata
+.azure/
+
+# Secrets (never commit)
+secrets/
+
+# Compiled Bicep ARM template
+infra/main.json
+
+# Ruby gem build artifacts
+scripts/*.gem
+scripts/Gemfile.lock

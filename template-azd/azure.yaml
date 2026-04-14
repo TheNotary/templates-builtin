@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: foo-bar
+metadata:
+  template: foo-bar
+infra:
+  provider: bicep
+  path: infra
+
+hooks:
+  preprovision:
+    shell: sh
+    run: ruby scripts/exe/preprovision
+  postprovision:
+    shell: sh
+    run: ruby scripts/exe/postprovision
+  predeploy:
+    shell: sh
+    run: ruby scripts/exe/predeploy
+  postdeploy:
+    shell: sh
+    run: ruby scripts/exe/postdeploy
