@@ -21,12 +21,14 @@ $ azd up
 ```
 foo-bar/
 ├── azure.yaml              # azd project definition (infra + hooks)
+│
 ├── infra/
 │   ├── main.bicep           # Subscription-scoped Bicep entry point
 │   ├── main.parameters.json # Parameter bindings
 │   ├── abbreviations.json   # Azure resource naming conventions
 │   └── modules/             # Reusable Bicep modules
 │       └── storage.bicep    # Example module
+│
 └── scripts/                 # Ruby gem for azd hook lifecycle
     ├── foo_bar.gemspec
     ├── Gemfile
