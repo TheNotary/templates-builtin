@@ -1,0 +1,26 @@
+name: CI - Docker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'template-docker-repo/**'
+      - '.github/workflows/ci-docker-repo.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'template-docker-repo/**'
+      - '.github/workflows/ci-docker-repo.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: template-docker-repo
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t test/foo_bar .

@@ -1,0 +1,32 @@
+name: CI - Java CLI (Maven)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'template-java-cli-app/**'
+      - '.github/workflows/ci-java-cli-app.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'template-java-cli-app/**'
+      - '.github/workflows/ci-java-cli-app.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: template-java-cli-app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package

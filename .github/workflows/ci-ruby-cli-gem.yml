@@ -1,0 +1,39 @@
+name: CI - Ruby CLI Gem
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'template-ruby-cli-gem/**'
+      - '.github/workflows/ci-ruby-cli-gem.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'template-ruby-cli-gem/**'
+      - '.github/workflows/ci-ruby-cli-gem.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: template-ruby-cli-gem
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Initialize git repo for gemspec
+        run: |
+          git init
+          git add .
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run tests
+        run: rake spec

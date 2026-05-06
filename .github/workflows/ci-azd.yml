@@ -1,0 +1,26 @@
+name: CI - Azure (Bicep Validation)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'template-azd/**'
+      - '.github/workflows/ci-azd.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'template-azd/**'
+      - '.github/workflows/ci-azd.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: template-azd/infra
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Bicep
+        run: az bicep build --file main.bicep
