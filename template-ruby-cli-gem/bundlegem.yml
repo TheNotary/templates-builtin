@@ -1,1 +1,40 @@
 category: general_purpose
+name_validation:
+  # RubyGems naming conventions: lowercase letters, digits, hyphens, underscores; must start with a letter.
+  regex_validator: "^[a-z][a-z0-9_-]*$"
+  # Names that would collide with built-in Ruby top-level constants.
+  reserved_names:
+    - array
+    - bignum
+    - class
+    - comparable
+    - complex
+    - data
+    - enumerable
+    - enumerator
+    - exception
+    - false
+    - file
+    - fixnum
+    - float
+    - hash
+    - integer
+    - io
+    - kernel
+    - method
+    - module
+    - nil
+    - numeric
+    - object
+    - proc
+    - process
+    - range
+    - rational
+    - regexp
+    - set
+    - string
+    - struct
+    - symbol
+    - thread
+    - time
+    - true
