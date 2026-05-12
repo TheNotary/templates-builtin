@@ -11,13 +11,18 @@ param location string
 // Load abbreviations for consistent resource naming
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceSuffix = toLower(uniqueString(subscription().id, environmentName, location))
+var projectName = 'foo-bar'
 var tags = {
   'azd-env-name': environmentName
+  'azd-project': projectName
 }
+
+var rgName = '${abbrs.resourcesResourceGroups}${projectName}-${environmentName}'
+
 
 // Resource group for all project resources
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-  name: '${abbrs.resourcesResourceGroups}${environmentName}'
+  name: rgName
   location: location
   tags: tags
 }
