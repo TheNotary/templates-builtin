@@ -1,13 +1,13 @@
 {
   "automationAutomationAccounts": "aa-",
-  "containerRegistries": "cr",
+  "containerRegistries": "cr777",
   "containerServiceManagedClusters": "aks-",
   "insightsActionGroups": "ag-",
   "insightsActivityLogAlerts": "alert-",
   "keyVaultVaults": "kv-",
   "operationalInsightsWorkspaces": "log-",
   "cognitiveServicesAccounts": "oai-",
-  "storageAccounts": "st",
+  "storageAccounts": "st777",
   "managedIdentityUserAssignedIdentities": "id-",
   "resourcesResourceGroups": "rg-"
 }
