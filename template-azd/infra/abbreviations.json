@@ -7,7 +7,7 @@
   "keyVaultVaults": "kv-",
   "operationalInsightsWorkspaces": "log-",
   "cognitiveServicesAccounts": "oai-",
-  "storageAccounts": "st777",
+  "storageAccounts": "st",
   "managedIdentityUserAssignedIdentities": "id-",
   "resourcesResourceGroups": "rg-"
 }

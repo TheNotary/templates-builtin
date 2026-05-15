@@ -18,7 +18,6 @@ var tags = {
 
 // Every resource (other than the resource group) needs this globally unique suffix
 var suffix = toLower(uniqueString(subscription().id, projectName, environmentName, location))
-var storageSeparator = '777'
 var rgName = '${abbrs.resourcesResourceGroups}${projectName}-${environmentName}'
 
 
@@ -34,7 +33,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
 module storage './modules/storage.bicep' = {
   scope: rg
   params: {
-    storageAccountName: '${abbrs.storageAccounts}${projectName}${storageSeparator}${suffix}'
+    storageAccountName: 'default${suffix}'
     location: location
     tags: tags
   }
