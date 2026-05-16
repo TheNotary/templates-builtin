@@ -4,4 +4,6 @@
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require "foo_bar"
 
-puts "==> postprovision complete (no-op stub)"
+FooBar::Provisioning::GrantRolesToAzUser.run
+
+puts "==> postprovision complete"

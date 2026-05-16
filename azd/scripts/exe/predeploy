@@ -4,4 +4,6 @@
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require "foo_bar"
 
-puts "==> predeploy complete (no-op stub)"
+FooBar::Deploy::EnableStorageAccess.run
+
+puts "==> predeploy complete"
