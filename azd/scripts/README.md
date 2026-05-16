@@ -35,27 +35,6 @@ FooBar::YourModule.run
 
 azd invokes these via the `hooks:` section in `azure.yaml`.
 
-## Adding a New Hook Module
-
-1. Create a new file under `lib/foo_bar/` (e.g., `lib/foo_bar/provisioning/setup.rb`)
-2. Define a module with a `.run` method:
-   ```ruby
-   module FooBar
-     module Provisioning
-       module Setup
-         extend FooBar::Helpers
-
-         def self.run
-           log "Running setup…"
-           # your logic here
-         end
-       end
-     end
-   end
-   ```
-3. Add `require_relative "foo_bar/provisioning/setup"` to `lib/foo_bar.rb`
-4. Call it from the appropriate `exe/` hook script
-
 ## Running Tests
 
 ```
@@ -63,3 +42,4 @@ cd scripts
 bundle install
 bundle exec rspec
 ```
+

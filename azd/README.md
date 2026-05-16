@@ -20,11 +20,11 @@ $ azd up
 
 ```
 foo-bar/
-├── azure.yaml              # azd project definition (infra + hooks)
+├── azure.yaml               # azd project definition (infra + hooks)
 │
 ├── infra/
 │   ├── main.bicep           # Subscription-scoped Bicep entry point
-│   ├── main.parameters.json # Parameter bindings
+│   ├── main.parameters.json # Parameters to the main bicep template 
 │   ├── abbreviations.json   # Azure resource naming conventions
 │   └── modules/             # Reusable Bicep modules
 │       └── storage.bicep    # Example module
@@ -46,3 +46,4 @@ foo-bar/
 Infrastructure is defined in Bicep under `infra/`. Add new modules in `infra/modules/` and wire them into `infra/main.bicep`.
 
 Hook scripts live under `scripts/` as a Ruby gem. See `scripts/README.md` for details on adding new hook logic.
+
