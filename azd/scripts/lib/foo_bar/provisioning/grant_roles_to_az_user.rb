@@ -13,6 +13,9 @@ module FooBar
     module GrantRolesToAzUser
       extend FooBar::Helpers
 
+      TIMEOUT_SECONDS = 150
+      POLL_INTERVAL_SECONDS = 5
+
       def self.run
         rg = ENV.fetch("AZURE_RESOURCE_GROUP", nil)
 
@@ -30,6 +33,8 @@ module FooBar
         user_oid = get_user_oid
         return if user_oid.nil?
 
+        new_assignments = []
+
         assignments.each do |role_name, config|
           role_id = config["role-id"]
           resource_env = config["resource-name-env"]
@@ -44,7 +49,13 @@ module FooBar
             "az storage account show --name #{resource_name} --resource-group #{rg} --query id -o tsv"
           ).strip
 
-          assign_role(role_name, role_id, user_oid, resource_scope, resource_name)
+          if assign_role(role_name, role_id, user_oid, resource_scope, resource_name)
+            new_assignments << { resource_name: resource_name, role_name: role_name }
+          end
+        end
+
+        new_assignments.each do |entry|
+          wait_for_data_plane_access(entry[:resource_name], entry[:role_name])
         end
       end
 
@@ -90,9 +101,54 @@ module FooBar
           "-o none"
         )
 
-        log "Role assignment created. Note: propagation may take up to 60s."
+        log "Role assignment created."
+        true
       end
       private_class_method :assign_role
+
+      def self.wait_for_data_plane_access(resource_name, role_name)
+        log "Waiting up to #{TIMEOUT_SECONDS}s for data-plane RBAC to propagate on #{resource_name} (#{role_name})\u2026"
+
+        deadline = Time.now + TIMEOUT_SECONDS
+        attempt = 0
+        last_error = nil
+
+        loop do
+          attempt += 1
+          ok, err = probe(resource_name)
+
+          if ok
+            log "RBAC propagated on #{resource_name} after #{attempt} attempt(s)."
+            return
+          end
+
+          last_error = err
+          remaining = deadline - Time.now
+          if remaining <= 0
+            $stderr.puts last_error.to_s unless blank?(last_error)
+            fail! "Timed out after #{TIMEOUT_SECONDS}s waiting for data-plane RBAC " \
+                  "to propagate on #{resource_name}. The deploying user may not have " \
+                  "'#{role_name}' on the account."
+          end
+
+          sleep [POLL_INTERVAL_SECONDS, remaining].min
+        end
+      end
+      private_class_method :wait_for_data_plane_access
+
+      # Cheapest call that exercises the Blob data plane with AAD auth.
+      # Returns [ok, error_output].
+      def self.probe(account_name)
+        _stdout, stderr, status = Open3.capture3(
+          "az storage container list " \
+          "--account-name #{account_name} " \
+          "--auth-mode login " \
+          "--num-results 1 " \
+          "--query \"[0].name\" -o tsv"
+        )
+        [status.success?, stderr]
+      end
+      private_class_method :probe
     end
   end
 end
