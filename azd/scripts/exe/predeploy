@@ -4,6 +4,7 @@
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require "foo_bar"
 
-FooBar::Deploy::EnableStorageAccess.run
-
-puts "==> predeploy complete"
+FooBar::LogAzd.tee_to_log!("predeploy")
+FooBar::LifecycleRunner.run("predeploy") do |runner|
+  runner.step("enable_storage_access") { FooBar::Deploy::EnableStorageAccess.run }
+end
