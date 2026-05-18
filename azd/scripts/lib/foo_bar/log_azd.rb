@@ -14,6 +14,42 @@ module FooBar
   module LogAzd
     LOG_DIR = File.join(FooBar::Helpers::REPO_ROOT, "logs")
 
+    # Dual-write IO wrapper. Every write goes to both the original IO
+    # (azd's pipe / terminal) and the log file. Thread-safe via mutex.
+    class TeeIO < IO
+      def initialize(original, log_file)
+        @original = original
+        @log_file = log_file
+        @mutex = Mutex.new
+        # Inherit the fd from the original so Ruby's IO plumbing works
+        # (e.g. isatty, fileno). We never close this fd ourselves.
+        super(original.fileno, "w")
+        self.sync = true
+        # Prevent Ruby from closing the underlying fd when this object
+        # is GC'd or the process exits — the original IO owns it.
+        self.autoclose = false
+      end
+
+      def write(*args)
+        @mutex.synchronize do
+          args.each do |str|
+            s = str.to_s
+            @original.write(s)
+            @log_file.write(s)
+          end
+        end
+      end
+
+      def flush
+        @original.flush
+        @log_file.flush
+      end
+
+      def close
+        @log_file.close
+      end
+    end
+
     def self.tee_to_log!(name)
       return if @tee_installed
       @tee_installed = true
@@ -21,53 +57,18 @@ module FooBar
       FileUtils.mkdir_p(LOG_DIR)
       log_path = File.join(LOG_DIR, "#{name}.log")
 
-      read_io, write_io = IO.pipe
+      log_file = File.open(log_path, "w")
+      log_file.sync = true
 
-      # tee child inherits the original fd 1 / fd 2 (azd's pipes) BEFORE
-      # we redirect them in this process.
-      tee_pid = Process.spawn("tee", log_path,
-        in:  read_io,
-        out: STDOUT,
-        err: STDERR,
-      )
-      read_io.close
-
-      # Save the originals so we can restore fd 1 / fd 2 at exit. Without
-      # this, fd 1 stays as a dup of the pipe write end after we reopen,
-      # and tee never sees EOF — making the at_exit waitpid deadlock.
-      orig_stdout = STDOUT.dup
-      orig_stderr = STDERR.dup
-
-      STDOUT.reopen(write_io)
-      STDERR.reopen(write_io)
-
-      # disable Ruby's write buffering
-      STDOUT.sync = true
-      STDERR.sync = true
-      write_io.close
+      $stdout = TeeIO.new(STDOUT, log_file)
+      $stderr = TeeIO.new(STDERR, log_file)
 
       at_exit do
-        begin
-          STDOUT.flush
-          STDERR.flush
-        rescue StandardError
-          # ignore
-        end
-        # Restore fd 1 / fd 2 to the originals. This drops the last
-        # references to the pipe write end inside this process, so tee
-        # observes EOF on its stdin and exits cleanly. azd, which is
-        # reading the original fd 1 / fd 2, also sees EOF and proceeds.
-        begin
-          STDOUT.reopen(orig_stdout)
-          STDERR.reopen(orig_stderr)
-        rescue StandardError
-          # ignore
-        end
-        begin
-          Process.waitpid(tee_pid)
-        rescue Errno::ECHILD, Errno::ESRCH
-          # already reaped
-        end
+        $stdout.flush rescue nil
+        $stderr.flush rescue nil
+        $stdout = STDOUT
+        $stderr = STDERR
+        log_file.close rescue nil
       end
 
       log_path
