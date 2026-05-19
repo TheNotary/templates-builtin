@@ -4,7 +4,7 @@ TODO: Describe your project
 
 ## Installation
 
-This is a simple HTML project that includes a CSS and Javascript file.  Out of the box, you don't need to compile or do anything, just `open index.html` to get hacking.  Alternatively consider serving the project via (some APIs require this --archaic, I know):
+This is a simple HTML project that includes a CSS and Javascript file.  Out of the box, you don't need to compile or do anything, just `open index.html` to get hacking.  Alternatively consider serving the project with the below command (some APIs require this --archaic, I know):
 
 ```
 npx serve
