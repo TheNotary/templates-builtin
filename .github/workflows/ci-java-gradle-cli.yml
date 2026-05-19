@@ -4,20 +4,20 @@ on:
   push:
     branches: [main]
     paths:
-      - 'template-java-gradle-cli-app/**'
-      - '.github/workflows/ci-java-gradle-cli-app.yml'
+      - 'java-gradle-cli/**'
+      - '.github/workflows/ci-java-gradle-cli.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'template-java-gradle-cli-app/**'
-      - '.github/workflows/ci-java-gradle-cli-app.yml'
+      - 'java-gradle-cli/**'
+      - '.github/workflows/ci-java-gradle-cli.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: template-java-gradle-cli-app
+        working-directory: java-gradle-cli
 
     steps:
       - uses: actions/checkout@v4

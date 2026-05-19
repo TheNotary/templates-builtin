@@ -1,23 +1,23 @@
-name: CI - Ruby CLI Gem
+name: CI - Ruby CLI
 
 on:
   push:
     branches: [main]
     paths:
-      - 'template-ruby-cli-gem/**'
-      - '.github/workflows/ci-ruby-cli-gem.yml'
+      - 'ruby-cli/**'
+      - '.github/workflows/ci-ruby-cli.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'template-ruby-cli-gem/**'
-      - '.github/workflows/ci-ruby-cli-gem.yml'
+      - 'ruby-cli/**'
+      - '.github/workflows/ci-ruby-cli.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: template-ruby-cli-gem
+        working-directory: ruby-cli
 
     steps:
       - uses: actions/checkout@v4

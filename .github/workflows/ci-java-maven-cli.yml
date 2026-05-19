@@ -4,20 +4,20 @@ on:
   push:
     branches: [main]
     paths:
-      - 'template-java-cli-app/**'
-      - '.github/workflows/ci-java-cli-app.yml'
+      - 'java-maven-cli/**'
+      - '.github/workflows/ci-java-maven-cli.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'template-java-cli-app/**'
-      - '.github/workflows/ci-java-cli-app.yml'
+      - 'java-maven-cli/**'
+      - '.github/workflows/ci-java-maven-cli.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: template-java-cli-app
+        working-directory: java-maven-cli
 
     steps:
       - uses: actions/checkout@v4
