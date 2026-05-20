@@ -15,11 +15,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest --no-watch"
   },
   "author": "",
   "license": "copyright",
   "devDependencies": {
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
   }
 }
