@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module FooBar
+module AzdSupport
   # Accumulates step timings and prints a summary table.
   #
   # This class is a pure data structure + formatter — it knows nothing

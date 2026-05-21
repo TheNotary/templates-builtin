@@ -2,13 +2,13 @@
 
 require "open3"
 
-# Shared helpers for foo-bar infrastructure scripts.
+# Shared helpers for the azd_support infrastructure scripts.
 #
 # Usage:
-#   require "foo_bar/helpers"
-#   include FooBar::Helpers
+#   require "azd_support/helpers"
+#   include AzdSupport::Helpers
 #
-module FooBar
+module AzdSupport
   module Helpers
     REPO_ROOT = File.expand_path("../../..", __dir__)
 

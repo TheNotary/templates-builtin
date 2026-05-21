@@ -4,10 +4,10 @@
 # preprovision hook in azure.yaml). Validates that every CLI tool and
 # configuration setting required by the deployment pipeline is present.
 
-module FooBar
+module AzdSupport
   module Validation
     module LocalEnvironment
-      extend FooBar::Helpers
+      extend AzdSupport::Helpers
 
       def self.run(_config = nil)
         errors = 0

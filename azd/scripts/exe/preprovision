@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
-require "foo_bar"
+require "azd_support"
 
-FooBar::LogAzd.tee_to_log!("preprovision")
-FooBar::LifecycleRunner.run("preprovision") do |runner|
-  runner.step("validate_local_environment") { FooBar::Validation::LocalEnvironment.run }
+AzdSupport::LogAzd.tee_to_log!("preprovision")
+AzdSupport::LifecycleRunner.run("preprovision") do |runner|
+  runner.step("validate_local_environment") { AzdSupport::Validation::LocalEnvironment.run }
 end

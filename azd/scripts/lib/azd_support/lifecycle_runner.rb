@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module FooBar
+module AzdSupport
   # Wrapper for azd lifecycle hooks with two responsibilities:
   #
   #   1. Time each named step and print a summary table at the end.
@@ -8,12 +8,12 @@ module FooBar
   #
   # Typical usage from an exe script:
   #
-  #   FooBar::LifecycleRunner.run("predeploy") do |runner|
+  #   AzdSupport::LifecycleRunner.run("predeploy") do |runner|
   #     runner.parallel(
-  #       enable_access: -> { FooBar::Deploy::EnableStorageAccess.run },
-  #       other_task:    -> { FooBar::Deploy::OtherTask.run },
+  #       enable_access: -> { AzdSupport::Deploy::EnableStorageAccess.run },
+  #       other_task:    -> { AzdSupport::Deploy::OtherTask.run },
   #     )
-  #     runner.step("final_step") { FooBar::Deploy::FinalStep.run }
+  #     runner.step("final_step") { AzdSupport::Deploy::FinalStep.run }
   #   end
   module LifecycleRunner
     # Wrap a hook body. Yields a Runner that records step timings and prints
@@ -43,8 +43,8 @@ module FooBar
     # Always logs `==> [<full_label>] start` / `... done in Xs` so live
     # tailing shows attribution as work happens.
     def self.timed(label)
-      report = Thread.current[:foo_bar_report]
-      parent = Thread.current[:foo_bar_parent_label]
+      report = Thread.current[:azd_support_report]
+      parent = Thread.current[:azd_support_parent_label]
       full_label = parent ? "#{parent}/#{label}" : label.to_s
 
       puts "==> [#{full_label}] start"
@@ -78,8 +78,8 @@ module FooBar
     def self.concurrent(steps)
       return {} if steps.empty?
 
-      report = Thread.current[:foo_bar_report]
-      parent = Thread.current[:foo_bar_parent_label]
+      report = Thread.current[:azd_support_report]
+      parent = Thread.current[:azd_support_parent_label]
 
       results = {}
       errors  = {}
@@ -87,8 +87,8 @@ module FooBar
       threads = steps.map do |label, callable|
         Thread.new do
           # Inherit report + parent so substep labels compose.
-          Thread.current[:foo_bar_report] = report
-          Thread.current[:foo_bar_parent_label] = parent
+          Thread.current[:azd_support_report] = report
+          Thread.current[:azd_support_parent_label] = parent
           begin
             results[label] = timed(label.to_s) { callable.call }
           rescue StandardError => e
@@ -143,8 +143,8 @@ module FooBar
             # Make the report + the parent label visible to anything
             # the callable invokes via LifecycleRunner.timed, so substep
             # timings are recorded against the right parent.
-            Thread.current[:foo_bar_report] = @report
-            Thread.current[:foo_bar_parent_label] = label_s
+            Thread.current[:azd_support_report] = @report
+            Thread.current[:azd_support_parent_label] = label_s
             t0 = LifecycleRunner.monotonic
             begin
               results[label_s] = callable.call

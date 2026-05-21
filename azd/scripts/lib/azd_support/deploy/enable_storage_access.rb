@@ -5,10 +5,10 @@
 #
 # Runs as the predeploy hook in azure.yaml.
 
-module FooBar
+module AzdSupport
   module Deploy
     module EnableStorageAccess
-      extend FooBar::Helpers
+      extend AzdSupport::Helpers
 
       def self.run
         rg = ENV.fetch("AZURE_RESOURCE_GROUP", nil)

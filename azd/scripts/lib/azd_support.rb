@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+require_relative "azd_support/version"
+require_relative "azd_support/helpers"
+require_relative "azd_support/timing_report"
+require_relative "azd_support/lifecycle_runner"
+require_relative "azd_support/log_azd"
+require_relative "azd_support/validation/local_environment"
+require_relative "azd_support/provisioning/grant_roles_to_az_user"
+require_relative "azd_support/deploy/enable_storage_access"
+
+module AzdSupport
+end

@@ -8,10 +8,10 @@ require "yaml"
 #
 # Runs as part of the postprovision hook in azure.yaml.
 
-module FooBar
+module AzdSupport
   module Provisioning
     module GrantRolesToAzUser
-      extend FooBar::Helpers
+      extend AzdSupport::Helpers
 
       TIMEOUT_SECONDS = 150
       POLL_INTERVAL_SECONDS = 5
@@ -60,7 +60,7 @@ module FooBar
       end
 
       def self.load_role_assignments
-        azure_yaml_path = File.join(FooBar::Helpers::REPO_ROOT, "azure.yaml")
+        azure_yaml_path = File.join(AzdSupport::Helpers::REPO_ROOT, "azure.yaml")
         config = YAML.safe_load_file(azure_yaml_path)
         config.fetch("deployer-role-assignments", {})
       end

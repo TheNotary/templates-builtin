@@ -1,6 +1,6 @@
 # Scripts
 
-This directory is a Ruby gem (`foo_bar`) that implements the azd hook lifecycle scripts referenced in `azure.yaml`.
+This directory is a Ruby gem (`azd_support`) that implements the azd hook lifecycle scripts referenced in `azure.yaml`.
 
 ## Structure
 
@@ -12,8 +12,8 @@ scripts/
 │   ├── predeploy                # Runs before `azd deploy`
 │   └── postdeploy               # Runs after `azd deploy`
 ├── lib/
-│   ├── foo_bar.rb               # Main gem loader
-│   └── foo_bar/
+│   ├── azd_support.rb               # Main gem loader
+│   └── azd_support/
 │       ├── version.rb           # Gem version
 │       ├── helpers.rb           # Shared helpers (logging, shell, tool detection)
 │       └── validation/
@@ -28,9 +28,9 @@ Each `exe/` script is a thin wrapper that loads the gem and calls a module:
 ```ruby
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
-require "foo_bar"
+require "azd_support"
 
-FooBar::YourModule.run
+AzdSupport::YourModule.run
 ```
 
 azd invokes these via the `hooks:` section in `azure.yaml`.

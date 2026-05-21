@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "lib/foo_bar/version"
+require_relative "lib/azd_support/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "foo_bar"
-  spec.version       = FooBar::VERSION
+  spec.name          = "azd_support"
+  spec.version       = AzdSupport::VERSION
   spec.authors       = ["TheNotary"]
-  spec.summary       = "Infrastructure automation scripts for foo-bar"
-  spec.description   = "Ruby gem wrapping the foo-bar azd deployment hooks " \
+  spec.summary       = "Infrastructure automation scripts for supporting azd"
+  spec.description   = "Ruby gem wrapping the azd deployment hooks " \
                         "with structured validation, provisioning, and deployment scripts."
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 3.1"

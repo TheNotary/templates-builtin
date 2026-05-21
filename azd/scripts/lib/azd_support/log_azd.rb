@@ -2,17 +2,17 @@
 
 require "fileutils"
 
-module FooBar
+module AzdSupport
   # Tee combined stdout/stderr to REPO_ROOT/logs/<name>.log so that
   # azd lifecycle hooks produce both real-time terminal output and a
   # persistent log file for later inspection.
   #
   # Typical usage from an exe script:
   #
-  #   FooBar::LogAzd.tee_to_log!("predeploy")
+  #   AzdSupport::LogAzd.tee_to_log!("predeploy")
   #
   module LogAzd
-    LOG_DIR = File.join(FooBar::Helpers::REPO_ROOT, "logs")
+    LOG_DIR = File.join(AzdSupport::Helpers::REPO_ROOT, "logs")
 
     # Dual-write IO wrapper. Every write goes to both the original IO
     # (azd's pipe / terminal) and the log file. Thread-safe via mutex.
