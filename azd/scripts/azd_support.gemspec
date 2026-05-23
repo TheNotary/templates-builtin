@@ -5,14 +5,15 @@ require_relative "lib/azd_support/version"
 Gem::Specification.new do |spec|
   spec.name          = "azd_support"
   spec.version       = AzdSupport::VERSION
-  spec.authors       = ["TheNotary"]
+  spec.authors       = ["FOO_AUTHOR"]
   spec.summary       = "Infrastructure automation scripts for supporting azd"
-  spec.description   = "Ruby gem wrapping the azd deployment hooks " \
-                        "with structured validation, provisioning, and deployment scripts."
-  spec.license       = "MIT"
-  spec.required_ruby_version = ">= 3.1"
+  spec.description   = "Ruby gem wrapping the azd deployment hooks with " \
+                       "structured validation, provisioning, and deployment " \
+                       "scripts."
+  spec.license       = "finders keepers"
+  spec.required_ruby_version = ">= 4.0"
 
-  spec.files = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*")
+  spec.files         = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*")
   spec.bindir        = "exe"
   spec.executables   = Dir.glob("exe/*").map { |f| File.basename(f) }
   spec.require_paths = ["lib"]
