@@ -2,6 +2,8 @@
 
 require_relative "azd_support/version"
 require_relative "azd_support/helpers"
+require_relative "azd_support/configuration"
+require_relative "azd_support/template_helpers"
 require_relative "azd_support/timing_report"
 require_relative "azd_support/lifecycle_runner"
 require_relative "azd_support/log_azd"
