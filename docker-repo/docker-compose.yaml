@@ -2,7 +2,7 @@ services:
   app:
     build: .
     # Uncomment to use a pre-built image instead:
-    # image: ghcr.io/YOUR_GITHUB_OWNER/YOUR_REPO:latest
+    # image: ghcr.io/FOO_IMAGE_PATH:latest
 
     environment:
       # Secrets and runtime config — prefer a .env file (never commit it).

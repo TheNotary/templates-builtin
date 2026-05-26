@@ -1,7 +1,7 @@
 # Foo::Bar
 
-[![Build](https://github.com/YOUR_GITHUB_OWNER/YOUR_REPO/actions/workflows/ci-main.yaml/badge.svg)](https://github.com/YOUR_GITHUB_OWNER/YOUR_REPO/actions/workflows/ci-main.yaml)
-[![Latest Version](https://img.shields.io/github/v/release/YOUR_GITHUB_OWNER/YOUR_REPO?label=latest)](https://github.com/YOUR_GITHUB_OWNER/YOUR_REPO/releases/latest)
+[![Build](https://github.com/FOO_IMAGE_PATH/actions/workflows/ci-main.yaml/badge.svg)](https://github.com/FOO_IMAGE_PATH/actions/workflows/ci-main.yaml)
+[![Latest Version](https://img.shields.io/github/v/release/FOO_IMAGE_PATH?label=latest)](https://github.com/FOO_IMAGE_PATH/releases/latest)
 
 TODO: Delete this and the text above, and describe your project
 
