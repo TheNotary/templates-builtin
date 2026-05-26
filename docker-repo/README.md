@@ -47,6 +47,6 @@ The template release automation is tag-driven and expects semantic version tags 
     $ git tag -a v0.1.0 -m "Release v0.1.0"
     $ git push origin v0.1.0
 
-Pushing a semver tag triggers `.github/workflows/release-image.yaml` and publishes both image tags: `{version}` and `latest`.
+Pushing a semver tag triggers `.github/workflows/release-image.yaml`, publishes both image tags (`{version}` and `latest`), and creates a GitHub Release.
 
 
