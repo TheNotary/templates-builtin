@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    # Uncomment to use a pre-built image instead:
+    # image: ghcr.io/YOUR_GITHUB_OWNER/YOUR_REPO:latest
+
+    environment:
+      # Secrets and runtime config — prefer a .env file (never commit it).
+      # Copy .env.example to .env and fill in real values.
+      AN_ENV_VAR: ${AN_ENV_VAR:-default_value}
+      APP_ENV: ${APP_ENV:-development}
+
+    volumes:
+      # Bind-mount a local data directory into the container.
+      # The ./data folder is created automatically by Docker Compose if absent.
+      - ./data:/app/data
+
+    restart: unless-stopped
