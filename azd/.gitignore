@@ -10,3 +10,6 @@ infra/main.json
 # Ruby gem build artifacts
 scripts/*.gem
 scripts/Gemfile.lock
+
+logs/
+!logs/.keep
