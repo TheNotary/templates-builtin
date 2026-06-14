@@ -46,4 +46,5 @@ module storage './modules/storage.bicep' = {
 // and in `azd env get-values`.
 // ---------------------------------------------------------------------------
 output AZURE_RESOURCE_GROUP string = rg.name
+output AZURE_TENANT_ID string = subscription().tenantId
 output STORAGE_ACCOUNT_NAME string = storage.outputs.storageAccountName
