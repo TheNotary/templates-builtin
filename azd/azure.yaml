@@ -6,6 +6,7 @@ metadata:
 infra:
   provider: bicep
   path: infra
+  name: foo-bar # this is the linchpin that enables azd env refresh (and avoids strange azd behavior)
 
 deployer-role-assignments:
   # Grants the storage role to the azd logged in user for the resource name 
