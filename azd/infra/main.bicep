@@ -20,10 +20,9 @@ var tags = {
 var suffix = toLower(uniqueString(subscription().id, projectName, environmentName, location))
 var rgName = '${abbrs.resourcesResourceGroups}${projectName}-${environmentName}'
 
-
 // Resource group for all project resources
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-  name: rgName
+  name: substring(rgName, 0, min(length(rgName), 90)) // don't exceed 90 chars
   location: location
   tags: tags
 }

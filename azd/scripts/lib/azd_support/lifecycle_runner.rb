@@ -16,6 +16,8 @@ module AzdSupport
   #     runner.step("final_step") { AzdSupport::Deploy::FinalStep.run }
   #   end
   module LifecycleRunner
+    extend AzdSupport::Helpers
+
     # Wrap a hook body. Yields a Runner that records step timings and prints
     # a summary on exit (success or failure).
     def self.run(name)
@@ -107,6 +109,8 @@ module AzdSupport
     end
 
     class Runner
+      extend AzdSupport::Helpers
+
       def initialize(report)
         @report = report
       end
