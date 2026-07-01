@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Shared template-expansion helpers for interpolating configuration values
 # into template files using ${VAR_NAME} syntax.
 #

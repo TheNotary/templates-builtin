@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Enables public network access on a storage account so that `azd deploy`
 # can upload deployment packages from outside the VNet.
 #

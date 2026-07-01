@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Pre-flight check that runs before `azd up` / `azd provision` (via the
 # preprovision hook in azure.yaml). Validates that every CLI tool and
 # configuration setting required by the deployment pipeline is present.

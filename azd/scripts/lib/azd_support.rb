@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "azd_support/version"
 require_relative "azd_support/helpers"
 require_relative "azd_support/configuration"

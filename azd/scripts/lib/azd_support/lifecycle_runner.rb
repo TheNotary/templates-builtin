@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module AzdSupport
   # Wrapper for azd lifecycle hooks with two responsibilities:
   #

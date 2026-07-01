@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "yaml"
 
 # Grants the deploying user the Azure RBAC roles listed under

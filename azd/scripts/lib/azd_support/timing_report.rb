@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module AzdSupport
   # Accumulates step timings and prints a summary table.
   #

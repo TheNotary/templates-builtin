@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "open3"
 
 # Shared helpers for the azd_support infrastructure scripts.
