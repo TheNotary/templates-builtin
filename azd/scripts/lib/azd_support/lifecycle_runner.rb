@@ -107,17 +107,17 @@ module AzdSupport
     end
 
     class Runner
-      extend AzdSupport::Helpers
+      include AzdSupport::Helpers
 
       def initialize(report)
         @report = report
       end
 
       # Runs a single named block, recording its wall-clock duration.
-      def step(label)
+      def step(label, &block)
         puts "==> [#{label}] start"
         t0 = LifecycleRunner.monotonic
-        result = yield
+        result = instance_exec(&block) if block_given?
         elapsed = LifecycleRunner.monotonic - t0
         @report.record(label, elapsed)
         puts "==> [#{label}] done in #{@report.format_duration(elapsed)}"

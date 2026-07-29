@@ -16,9 +16,9 @@ $ azd up
 - [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (for hook scripts)
 
-## Project Structure
+## Project Structure Highlights
 
-```
+```sh
 foo-bar/
 ├── azure.yaml               # azd project definition (infra + hooks)
 │
@@ -30,15 +30,8 @@ foo-bar/
 │       └── storage.bicep    # Example module
 │
 └── scripts/                 # Ruby gem for azd hook lifecycle
-    ├── foo_bar.gemspec
-    ├── Gemfile
-    ├── exe/                 # Hook entry points
-    │   ├── preprovision
-    │   ├── postprovision
-    │   ├── predeploy
-    │   └── postdeploy
-    └── lib/
-        └── foo_bar/         # Hook implementation modules
+    ├── exe/                 # Lifecycle Hooks for azd
+    └── spec/integration     # Integration tests for deployed services
 ```
 
 ## Development
