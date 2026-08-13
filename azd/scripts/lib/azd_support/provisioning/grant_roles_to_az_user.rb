@@ -23,7 +23,7 @@ module AzdSupport
         end
 
         assignments = load_role_assignments
-        if assignments.empty?
+        if assignments.nil? || assignments.empty?
           log "No deployer-role-assignments defined in azure.yaml — skipping RBAC grants."
           return
         end
