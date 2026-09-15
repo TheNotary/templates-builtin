@@ -8,6 +8,7 @@ require_relative "azd_support/log_azd"
 require_relative "azd_support/validation/local_environment"
 require_relative "azd_support/provisioning/grant_roles_to_az_user"
 require_relative "azd_support/deploy/enable_storage_access"
+require_relative "azd_support/az_compare/az_compare"
 
 module AzdSupport
 end
