@@ -40,3 +40,11 @@ Infrastructure is defined in Bicep under `infra/`. Add new modules in `infra/mod
 
 Hook scripts live under `scripts/` as a Ruby gem. See `scripts/README.md` for details on adding new hook logic.
 
+## Running Integration Tests
+
+Live integration tests should be defined in situations where the system's actual functionality needs to be tested against live resources to prove out the implmentation.  Run the below command to run the integration test suite.
+
+```
+cd scripts/ && bundle exec rake integration
+```
+
