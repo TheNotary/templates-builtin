@@ -1,0 +1,22 @@
+{
+    "name": "dev-container1",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "options": [
+            "--build-context",
+            "plen=${localWorkspaceFolder}/../plen"
+        ]
+    },
+    "remoteUser": "vscode",
+    "initializeCommand": "mkdir -p ${localEnv:HOME}/.azure ${localEnv:HOME}/.config/coding-harness",
+    "runArgs": [
+        "--add-host=host.docker.internal:host-gateway"
+    ],
+    "mounts": [
+        "source=/dev/null,target=${containerWorkspaceFolder}/.MY_PLAN.md,type=bind,readonly"
+    ],
+    "containerEnv": {
+        "NPM_REGISTRY_URL": "http://host.docker.internal:4873",
+        "COREPACK_NPM_REGISTRY": "http://host.docker.internal:4873"
+    }
+}
